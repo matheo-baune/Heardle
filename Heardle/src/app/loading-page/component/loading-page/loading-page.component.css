@@ -1,0 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#loading{
+  transition: all .5s ease;
+}
+.bg-logo{
+  background: #1F2229;
+  filter: blur(0.5);
+}
+.custom-animation{
+  animation: loading 1.5s ease-in-out infinite;
+}
+@keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
