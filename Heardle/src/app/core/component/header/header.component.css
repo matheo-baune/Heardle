@@ -1,8 +1,5 @@
 /*HEADER*/
 header {
-  max-height: 10vh;
-  min-height: 10vh;
-  width: 100vw;
   background: #1F2229;
   filter: blur(0.5);
   display: flex;
@@ -12,7 +9,19 @@ header {
 header .logo {
   width: 32vh;
   height: 8vh;
-  border: 1px solid black;
+  display: flex;
+  align-items: center;
+}
+
+header img{
+  height: 100%;
+  width: fit-content;
+  margin-right: 15px;
+}
+
+header h1{
+  font-size: 4vh;
+  white-space: nowrap;
 }
 header i {
   font-size: 10vh;

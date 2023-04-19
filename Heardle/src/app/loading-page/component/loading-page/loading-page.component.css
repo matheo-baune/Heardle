@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 #loading{
-  transition: all .5s ease;
+  transition: all 5s ease;
 }
 .bg-logo{
   background: #1F2229;

@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
+import {RouterLink} from "@angular/router";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 
@@ -11,10 +13,13 @@ import { FooterComponent } from './component/footer/footer.component';
     FooterComponent
   ],
   exports: [
-    HeaderComponent
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    RouterLink,
+    BrowserAnimationsModule
   ]
 })
 export class CoreModule { }

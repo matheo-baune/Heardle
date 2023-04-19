@@ -6,12 +6,12 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./loading-page.component.css']
 })
 export class LoadingPageComponent implements OnInit{
-  topValue = -100; //TODO - REMETTRE A ZERO LORS DU DEPLOIEMENT
+  topValue = -120; //TODO - REMETTRE A ZERO LORS DU DEPLOIEMENT
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.topValue = -100
-    },1800)
+      this.topValue = -120
+    },1900)
   }
 
 }
