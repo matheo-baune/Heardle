@@ -13,5 +13,4 @@ export class LoadingPageComponent implements OnInit{
       this.topValue = -120
     },1900)
   }
-
 }

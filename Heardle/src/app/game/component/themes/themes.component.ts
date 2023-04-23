@@ -1,10 +1,15 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+
 
 @Component({
   selector: 'app-themes',
   templateUrl: './themes.component.html',
   styleUrls: ['./themes.component.css']
 })
-export class ThemesComponent {
+export class ThemesComponent implements OnInit{
+
+
+  ngOnInit(): void {
+  }
 
 }

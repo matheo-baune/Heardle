@@ -115,15 +115,6 @@ hr {
   background-position: 50% 0%;
 }
 
-.past-guess:nth-child(1){
-  background-image: url(/assets/img/album_cover/skiboy.jpg);
-  border: 3px solid #60ff60;
-}
-
-.past-guess:nth-child(2){
-  background-image: url(/assets/img/album_cover/ziak.jpg);
-  border: 3px solid #60ff60;
-}
 
 /* -*-*-*-*-*-*-*-*-*-*-*-*-* */
 /* THEME (THEME ONLY) */
@@ -180,13 +171,6 @@ hr {
   background-position: 50% 0%;
 }
 
-.song-card:nth-child(1){
-  background-image: url(/assets/img/album_cover/skiboy.jpg);
-}
-
-.song-card:nth-child(2), .song-card:nth-child(3){
-  background-image: url(/assets/img/album_cover/ziak.jpg);
-}
 
 .song-card>p{
   height: 3vh;
