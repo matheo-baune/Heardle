@@ -1,0 +1,36 @@
+main div{
+  height: 23vh;
+  width: 23vh;
+  border-radius: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  justify-self: center;
+  align-self: center;
+
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding: 0 10px;
+}
+
+main div>p{
+  position: absolute;
+  color: white;
+  font-size: 1.5rem;
+  bottom: 15px;
+  background: rgba(0,0,0,0.3);
+  padding: 10px;
+}
+
+main{
+  min-height: 85vh;
+  max-height: 85vh;
+  width: 100vw;
+  background-color: #414141;
+
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: auto repeat(3, 1fr);
+}
