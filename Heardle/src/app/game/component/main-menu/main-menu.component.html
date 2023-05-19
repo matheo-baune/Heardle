@@ -1,17 +1,21 @@
 <app-loading-page></app-loading-page>
 <main>
-  <div class="Desktop" [@fadeInOut]>
-    <div class="DCard daily cursor-pointer transition-all hover:-translate-y-3.5" routerLink="/daily">
-      <span class="font-weight-black">Heardle<br>du jour</span>
+  <div class="Desktop grid" [@fadeInOut]>
+
+    <div class="DCard grid-cols-1 grid-rows-1 ml-10 daily cursor-pointer transition-all hover:-translate-y-3.5" routerLink="/daily">
+      <p class="font-weight-black">Heardle du jour</p>
       <div class="bottom"><span>Une chanson, 5 essais...</span></div>
     </div>
-    <div class="DCard theme cursor-pointer transition-all hover:-translate-y-3.5" routerLink="/themes">
+
+    <div class="DCard theme cursor-pointer my-10 transition-all hover:-translate-y-3.5" routerLink="/themes">
       <span class="font-weight-black">Thème</span>
       <div class="bottom"><span>Choisis ton thème !</span></div>
     </div>
-    <div class="DCard streak cursor-pointer transition-all hover:-translate-y-3.5">
+
+    <div class="DCard streak cursor-pointer mr-10 transition-all hover:-translate-y-3.5">
       <span class="font-weight-black">Suite<br>du jour</span>
       <div class="bottom"><span>5 chansons d'affilées ?</span></div>
     </div>
+
   </div>
 </main>

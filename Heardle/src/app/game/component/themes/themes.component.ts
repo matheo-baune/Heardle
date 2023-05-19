@@ -17,8 +17,6 @@ export class ThemesComponent implements OnInit{
       .then(data => {
         this.playlists = data
         this.isInitialized = true
-        console.log(data.length)
-        console.log(data)
       })
   }
 

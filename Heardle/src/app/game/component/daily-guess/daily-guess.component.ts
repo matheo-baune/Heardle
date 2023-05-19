@@ -1,5 +1,7 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {animate, style, transition, trigger} from "@angular/animations";
+import {Track} from "../../../core/models/track.model";
+import {AudioPlayerComponent} from "../../../audio-player/audio-player/audio-player.component";
 
 @Component({
   selector: 'app-daily-guess',
@@ -17,30 +19,20 @@ import {animate, style, transition, trigger} from "@angular/animations";
     ])
   ]
 })
-export class DailyGuessComponent implements OnInit, OnDestroy{
+export class DailyGuessComponent implements OnInit{
 
-
-  song!: any;
-  isInitialized: boolean = false;
-  audio!: HTMLAudioElement;
+  song!:Track;
+  steps:number[] = [ 1, 5, 7, 10, 15 ]
+  @ViewChild(AudioPlayerComponent) audioPlayerComponent!: AudioPlayerComponent;
 
   ngOnInit(): void {
-  }
-
-  listenSong(): void{
-    const streamUrl = this.song.preview_url;
-
-    // 5. Set up an audio player and start streaming the audio
-    this.audio = new Audio();
-    this.audio.src = streamUrl;
-    this.audio.play();
-  }
-
-  ngOnDestroy(): void {
-    if(this.audio){
-      this.audio.pause();
-      this.audio.currentTime = 0;
+    let xhrDaily = new XMLHttpRequest()
+    xhrDaily.onload = () => {
+      if(xhrDaily.status === 200){
+        this.song = JSON.parse(xhrDaily.response)
+      }
     }
+    xhrDaily.open('GET',"http://localhost:8080/daily")
+    xhrDaily.send()
   }
-
 }

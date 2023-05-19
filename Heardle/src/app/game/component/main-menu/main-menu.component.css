@@ -51,13 +51,13 @@
 .DCard>span{
   margin-bottom: 5vw;
   font-size: 5vw;
-  font-family: Subway blck;
+  font-family: Subway blck, serif;
   text-align: center;
 }
 
 .DCard .bottom span{
   font-size: 1.8vw;
-  font-family: Subway blck;
+  font-family: Subway blck, serif;
 }
 
 .hidden{
