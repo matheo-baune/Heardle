@@ -1,12 +1,11 @@
+<app-nav></app-nav>
 <main>
   <section *ngIf="isInitialized" class="w-max h-max contents">
 
     <div class="container-test transition-all hover:-translate-y-3.5" *ngFor="let playlist of playlists">
-      <img src="{{playlist?.img_url?.url}}">
+      <img src="assets/img/icon/{{playlist.name}}.png">
       <p>{{playlist.name}}</p>
     </div>
 
   </section>
 </main>
-
-
