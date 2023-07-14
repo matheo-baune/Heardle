@@ -1,7 +1,7 @@
-main div{
-  height: 23vh;
-  width: 23vh;
-  border-radius: 45px;
+main div {
+  height: 20vh;
+  width: 20vh;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,25 +12,68 @@ main div{
   cursor: pointer;
   user-select: none;
   position: relative;
-  padding: 0 10px;
+  padding: 10px 10px;
+  background-color: #d9d9d9;
+  border: 1px solid #2f2f2f;
 }
 
-main div>p{
+main div img {
+  height: 80%;
+  transition: all .2s;
+  opacity: 1;
+}
+
+main div>p {
   position: absolute;
-  color: white;
-  font-size: 1.5rem;
-  bottom: 15px;
-  background: rgba(0,0,0,0.3);
-  padding: 10px;
+  font-size: 2rem;
+  font-weight: 900;
+  color: black;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  margin: 0;
+  width: 100%;
+  transition: all .2s;
+  text-align: center;
+  line-height: 3rem;
+  opacity: 0;
 }
 
-main{
-  min-height: 85vh;
-  max-height: 85vh;
-  width: 100vw;
-  background-color: #414141;
+main div:hover img {
+  height: 0%;
+  width: 0%;
+  opacity: 0;
+  transform: translate(0, 50%);
+}
+
+main div:hover p {
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+}
+
+section {
+  background-color: #2f2f2f;
 
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-template-rows: auto repeat(3, 1fr);
+  grid-template-columns: repeat(7, auto);
+  grid-template-rows: repeat(3, auto);
+  gap: 10px;
+  padding: 0 10vw;
+}
+
+main div:first-of-type {
+  border-top-left-radius: 45px;
+}
+
+main div:nth-of-type(7) {
+  border-top-right-radius: 45px;
+}
+
+main div:nth-of-type(15) {
+  border-bottom-left-radius: 45px;
+}
+
+main div:nth-of-type(21) {
+  border-bottom-right-radius: 45px;
 }
