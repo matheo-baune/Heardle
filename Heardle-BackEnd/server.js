@@ -19,7 +19,6 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 let all_tracks = null;
 let daily_track = null;
 
-
 app.use(function (req, res, next) {
     res.header('Access-Control-Allow-Origin', '*'); // allow requests from any origin
     res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -108,6 +107,7 @@ app.listen(environnement.PORT, async () => {
     Global.getAllTracks(access_token).then((tracks) => {
         all_tracks = tracks
         Global.randomizeIndexDaily(all_tracks.length)
+        console.log(all_tracks)
         console.log("End loading tracks")
     })
 
