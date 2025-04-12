@@ -51,7 +51,7 @@ async function getPlaylists(access_token) {
     const user_id = 'l2medd2pcxwqv50xnvwm2zm6u';
     try {
         let response = await axios.get(
-            `https://api.spotify.com/v1/users/${user_id}/playlists?offset=1&limit=50`,
+            `https://api.spotify.com/v1/users/${user_id}/playlists?offset=0&limit=50`,
             {
                 headers: {
                     Authorization: `Bearer ${access_token}`,

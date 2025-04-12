@@ -24,7 +24,7 @@ export class ThemesComponent implements OnInit{
         this.playlists = data
         this.isInitialized = true
         this.playlists.forEach((playlist) => {
-          playlist.name = playlist.name.substring(10);
+          playlist.name = playlist.name.substring(11);
         })
       })
   }
