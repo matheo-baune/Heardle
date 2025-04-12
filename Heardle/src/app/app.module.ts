@@ -14,6 +14,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
 import { AudioPlayerComponent } from './audio-player/audio-player/audio-player.component';
 import { TimerComponent } from './audio-player/timer/timer.component';
+import { StreakComponent } from './game/component/streak/streak.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { TimerComponent } from './audio-player/timer/timer.component';
     MainMenuComponent,
     DailyGuessComponent,
     ThemesComponent,
+    StreakComponent,
     AudioPlayerComponent,
     TimerComponent,
   ],

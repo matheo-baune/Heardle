@@ -1,0 +1,46 @@
+import {Component, OnInit} from '@angular/core';
+import { environment } from "../../../../environments/environement";
+
+
+@Component({
+  selector: 'app-streak',
+  templateUrl: './streak.component.html',
+  styleUrls: ['./streak.component.css']
+})
+export class StreakComponent implements OnInit{
+
+  playlists!: any[]
+  isInitialized:boolean = false
+  playerInitialized:boolean = false
+  song!:any
+  steps:number[] = [ 1, 5, 7, 10, 15 ]
+  playlist:string = "";
+
+  ngOnInit(): void {
+    console.log(environment.apiUrl)
+    fetch(`${environment.apiUrl}/playlists`)
+      .then(response => response.json())
+      .then(data => {
+        this.playlists = data
+        this.isInitialized = true
+        this.playlists.forEach((playlist) => {
+          playlist.name = playlist.name.substring(10);
+        })
+      })
+  }
+
+  onPlaylistClick(playlist: any) {
+    this.playlist = playlist.id
+    console.log(playlist.id)
+    console.log(playlist.name)
+    fetch(`${environment.apiUrl}/daily/${playlist.id}`)
+    .then(response => response.json())
+    .then(data => {
+      this.song = data
+      this.song.name = this.song.track_name;
+      console.log(this.song)
+      this.playerInitialized = true
+      })
+  }
+
+}
