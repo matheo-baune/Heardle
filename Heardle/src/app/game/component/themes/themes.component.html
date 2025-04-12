@@ -1,0 +1,14 @@
+<app-nav></app-nav>
+<main>
+  <section *ngIf="isInitialized && !playerInitialized" class="w-max h-max contents themes-container">
+    <div class="container-test transition-all" *ngFor="let playlist of playlists" (click)="onPlaylistClick(playlist)">
+      <img src="assets/img/icon/{{playlist.name}}.png" alt="{{playlist.name}}">
+      <p>{{playlist.name}}</p>
+    </div>
+  </section>
+  <section *ngIf="playerInitialized" class="w-max h-max contents">
+    <div [@fadeInOut] class="h-full w-full flex justify-center items-center flex-col">
+      <app-audio-player [song]="song" [steps]="steps" [localKey]="playlist" [endAction]="'Rejouer'"></app-audio-player>
+    </div>
+  </section>
+</main>

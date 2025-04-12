@@ -1,0 +1,31 @@
+<app-loading-page></app-loading-page>
+<main>
+  <div class="Desktop grid" [@fadeInOut]>
+
+    <div class="DCard grid-cols-1 grid-rows-1 ml-10 daily cursor-pointer transition-all hover:-translate-y-3.5"
+      routerLink="/daily">
+      <img src="assets/img/icon/Calendar.svg" alt="">
+      <div class="bottom">
+        <p class="font-weight-black">Daily</p>
+        <p>Une chanson, 5 essais...</p>
+      </div>
+    </div>
+
+    <div class="DCard theme cursor-pointer my-10 transition-all hover:-translate-y-3.5" routerLink="/themes">
+      <img src="assets/img/icon/List.svg" alt="">
+      <div class="bottom">
+        <p class="font-weight-black">Thèmes</p>
+        <p>Choisis ton thème !</p>
+      </div>
+    </div>
+
+    <div class="DCard streak cursor-pointer mr-10 transition-all hover:-translate-y-3.5">
+      <img src="assets/img/icon/Flame.svg" alt="">
+      <div class="bottom">
+        <p class="font-weight-black">Streak</p>
+        <p>Enchaîne les chansons</p>
+      </div>
+    </div>
+
+  </div>
+</main>

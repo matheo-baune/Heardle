@@ -1,0 +1,162 @@
+/*HEADER*/
+@font-face {
+  font-family: "montserrat";
+  /* TODO Trouver le chemin absolu */
+  src: url("../../../../assets/fonts/montserrat.regular.ttf");
+}
+
+
+* {
+  font-family: "montserrat" !important;
+}
+
+header {
+  background: #2f2f2f;
+  filter: blur(0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 10vh;
+}
+
+header>div {
+  width: 20vw;
+}
+
+header .logo {
+  height: 9vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+header img {
+  height: 100%;
+  width: fit-content;
+  margin-right: 15px;
+}
+
+header h1 {
+  font-size: 4vh;
+  color: #d9d9d9;
+  white-space: nowrap;
+  margin: 0;
+  text-align: center;
+}
+
+header .min-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+header .min-nav img {
+  height: 6vh;
+  width: fit-content;
+  margin-right: 15px;
+  padding: 10px;
+  border-radius: 50%;
+  background-color: #d9d9d9;
+  transition: all 0.2s;
+}
+
+header .min-nav img:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.help-container {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: -120%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .2s;
+}
+
+.help-container.active {
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+}
+
+.help-text {
+  background-color: #2f2f2f;
+  padding: 20px;
+  border-radius: 20px;
+  width: 50vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.help-text h2 {
+  font-size: 4vh;
+  color: #d9d9d9;
+  text-align: center;
+  margin: 0;
+  font-weight: 700;
+  margin-bottom: 2vh;
+}
+
+.help-text p {
+  font-size: 2vh;
+  color: #d9d9d9;
+  text-align: center;
+  margin: 0;
+}
+
+.help-container .close-btn {
+  height: 5vh;
+  width: 10vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  margin-top: 2vh;
+  transition: all 0.2s;
+}
+
+.help-container .close-btn:hover {
+  cursor: pointer;
+  transform: scale(1.1);
+}
+
+@media (max-width: 768px) {
+  header {
+    height: auto;
+    padding: 10px;
+    align-items: center;
+  }
+
+  header h1 {
+    font-size: 3vh;
+    text-align: center;
+  }
+
+  .help-text {
+    width: 80vw;
+    height: 80vh;
+  }
+
+  .help-container .close-btn {
+    width: 30vw;
+    height: 5vh;
+  }
+}
+
+@media (max-width: 400px) {
+  header .title {
+    display: none;
+  }
+
+  header>div {
+    width: 40%;
+  }
+}

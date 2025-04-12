@@ -1,0 +1,114 @@
+.Desktop {
+  display: flex;
+  gap: 1vw;
+  align-items: center;
+}
+
+.DCard {
+  width: 25vw;
+  height: 25vw;
+  border-radius: 20px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+  color: black;
+  background-color: #d9d9d9;
+}
+
+.DCard:nth-of-type(1) {
+  border-top-left-radius: 45px;
+  border-bottom-left-radius: 45px;
+}
+
+.DCard:nth-of-type(3) {
+  border-top-right-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+
+.DCard img {
+  height: 40%;
+  width: 40%;
+}
+
+.DCard div {
+  margin-bottom: 5vh;
+  margin-left: 1vw;
+}
+
+p:first-of-type {
+  margin: 0;
+  font-size: 4rem;
+  font-weight: 900;
+  display: block;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  align-items: center;
+  margin-bottom: 1vh;
+}
+
+p:last-of-type {
+  margin: 0;
+  font-size: 1em;
+  font-weight: lighter;
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .Desktop {
+    flex-direction: column;
+    gap: 1vh;
+  }
+
+  .DCard {
+    width: 80vw;
+    height: 25vh;
+    margin: 0;
+  }
+
+  .DCard:nth-of-type(1) {
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    border-bottom-left-radius: 20px;
+  }
+  
+  .DCard:nth-of-type(3) {
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 45px;
+    border-bottom-left-radius: 45px;
+  }
+
+  .DCard img {
+    height: 30%;
+    width: fit-content;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+  }
+
+  .DCard div {
+    margin-bottom: 0;
+    margin-left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  p:first-of-type {
+    font-size: 2rem;
+    width: fit-content;
+    height: 3rem;
+  }
+}

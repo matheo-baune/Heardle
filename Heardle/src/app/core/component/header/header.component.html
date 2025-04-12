@@ -1,0 +1,27 @@
+<header class="w-screen">
+  <div class="logo cursor-pointer" routerLink="/">
+    <img class="" src="assets/img/small_headphone.png" alt="" srcset="">
+  </div>
+  <div class="title cursor-pointer" routerLink="/">
+    <h1>GUESS HIT</h1>
+  </div>
+  <div class="min-nav">
+    <div class="home-btn" (click)="goHome()">
+      <img src="assets/img/icon/home.png" alt="">
+    </div>
+    <div class="help-btn" (click)="showHelp()">
+      <img src="assets/img/icon/question.png" alt="">
+    </div>
+  </div>
+</header>
+<div class="help-container">
+  <div class="help-text">
+    <h2>Comment jouer ?</h2>
+    <p>Le but du jeu est de deviner le titre d'une chanson en écoutant un extrait de 10 secondes maximum. Vous avez 5 essais pour trouver la bonne réponse.</p>
+    <p>Pour chaque essai, vous devez entrer le nom de la chanson. Si vous trouvez la bonne réponse, vous gagnez !</p>
+    <p>Chaque nouvel essai vous donnera un peu plus de temps pour trouver la bonne réponse. Vous pouvez passer si vous n'avez pas d'idée.</p>
+    <p>Bonne chance !</p>
+
+    <div class="close-btn" (click)="showHelp()">Jouer</div>
+  </div>
+</div>

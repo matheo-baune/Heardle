@@ -1,0 +1,27 @@
+/* FOOTER */
+
+footer{
+  min-height: 5vh;
+  max-height: 5vh;
+  width: 100vw;
+
+  background-color: #1F2229;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+footer h3{
+  color: #696969;
+  font-weight: bolder;
+  font-size: 1.2em;
+}
+
+footer h3:first-of-type{
+  margin: 0 0 0 2vw;
+}
+
+footer h3:nth-of-type(2){
+  margin: 0 2vw 0 0;
+}

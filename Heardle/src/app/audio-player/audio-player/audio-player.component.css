@@ -1,0 +1,374 @@
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+/* TIMER */
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+
+.timer {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2vw;
+  align-items: center;
+}
+
+.bar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  position: relative;
+}
+
+.bar progress {
+  visibility: hidden;
+}
+
+.timer>p.current-time {
+  color: #d9d9d9;
+  font-size: 2em;
+  font-weight: 900;
+  margin: 0;
+}
+
+.timer>p.players-guesses {
+  color: #d9d9d9;
+  font-size: 1em;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.bar button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-left: 3px;
+}
+
+.play-button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.play-button:hover i {
+  transform: scale(1.3);
+}
+
+.play-button i {
+  font-size: 1.5rem;
+  color: #d9d9d9;
+  transition: all .2s;
+}
+
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+/* SONG CONTAINER */
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+
+.song-container {
+  display: flex;
+  justify-content: center;
+  gap: 1vh;
+}
+
+.song-card {
+  height: 50vh;
+  width: 15vw;
+  border-radius: 20px;
+
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-size: cover;
+  background-position: 50% 0;
+}
+
+.song-card img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+  z-index: 1;
+}
+
+
+.song-card.p-correct {
+  border: 2px solid #ffbf60;
+}
+.song-card.incorrect {
+  border: 2px solid #ff6060;
+}
+.song-card.correct {
+  border: 2px solid #60ff60;
+}
+
+
+.song-card:first-of-type,
+.song-card:first-of-type img {
+  border-top-left-radius: 45px;
+  border-bottom-left-radius: 45px;
+}
+
+.song-card:last-of-type,
+.song-card:last-of-type img {
+  border-top-right-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+
+.song-card>p {
+  height: fit-content;
+  width: 13vw;
+  border-radius: 10px;
+  background-color: rgba(47, 47, 47, 0.7);
+  color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 0.7em;
+  font-weight: 600;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.song-card>p:nth-of-type(1) {
+  margin-top: 2vh;
+}
+
+.song-card>p:nth-of-type(2) {
+  margin-bottom: 2vh;
+}
+
+.song-card>.checkmark {
+  position: absolute;
+  height: 2vh;
+  width: 2vh;
+  border-radius: 45px;
+  top: 50.5vh;
+  z-index: 2;
+}
+
+.incorrect {
+  background-color: #ff6060;
+}
+
+.p-correct {
+  background-color: #ffbf60;
+}
+
+.correct {
+  background-color: #60ff60;
+}
+
+.inactive {
+  background-color: #414141;
+  border: 1px solid #696969;
+}
+
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+/* GUESS CONTAINER */
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+
+.guess-container {
+  height: 5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px
+}
+
+.guess-input {
+  height: 3vh;
+  width: 70vw;
+  border-radius: 20px;
+  background-color: white;
+  padding-left: 1vw;
+  border-top-left-radius: 45px;
+  border-bottom-left-radius: 45px;
+}
+
+.guess-container>.button {
+  height: 3vh;
+  width: 5vw;
+  border-radius: 20px;
+  background-color: #D9D9D9;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .1s;
+}
+
+.guess-container>.button:first-of-type {
+  border-radius: 5px;
+}
+
+.guess-container>.button:last-of-type {
+  border-top-right-radius: 45px;
+  border-bottom-right-radius: 45px;
+}
+
+.guess-container>.button>svg {
+  height: 2vh;
+}
+
+.button:hover {
+  scale: 1.2;
+  cursor: pointer;
+}
+
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+/* END SCREEN */
+/* -*-*-*-*-*-*-*-*-*-*-*- */
+
+.end-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 70vh;
+  width: 70vw;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  padding: 2vh;
+  transition: all 0.5s;
+}
+
+.bg {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  position: absolute;
+  left: -10px;
+  top: -10px;
+}
+
+.end-texts {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+  width: 100%;
+  color: #D9D9D9;
+}
+
+.end-texts>img {
+  height: 20vh;
+  border-radius: 20px;
+}
+
+.end-container .button {
+  height: 5vh;
+  width: 10vw;
+  border-radius: 20px;
+  border: 1px solid #D9D9D9;
+  color: #D9D9D9;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all .1s;
+  margin: 20px;
+}
+
+.confetti {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  opacity: 0.8;
+  animation: fall linear forwards
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  90% {
+    transform: translateY(4500%) rotate(972deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(5000%) rotate(1080deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .guess-input {
+    width: 80vw;
+    height: 5vh;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+  }
+
+  .song-card{
+    width: 100%;
+    display: none;
+  }
+
+  .song-card.last-active{
+    display: flex;
+  }
+
+  .song-card>p {
+    width: 80vw;
+  }
+
+  .guess-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .guess-container * {
+    font-size: 1.2rem;
+  }
+
+  .guess-container>.button {
+    width: 30vw;
+    height: 5vh;
+  }
+
+  .guess-container>.button>svg {
+    height: 2.4vh;
+  }
+
+  .guess-container>.button:first-of-type {
+    border-radius: 20px;
+    border-top-left-radius: 45px;
+    border-bottom-left-radius: 45px;
+  }
+
+  .end-container {
+    position: fixed;
+    width: 90vw;
+    height: 90vh;
+    padding: 5vh;
+  }
+
+  .end-texts>img {
+    height: 30vh;
+  }
+}

@@ -1,0 +1,74 @@
+<!--<div [@fadeInOut] class="flex flex-col justify-evenly" *ngIf="isInitialized" style="height: 85vh;width: 90vw">-->
+<section [@fadeInOut] class="flex flex-col justify-evenly h-full" *ngIf="isInitialized" style="width: 90vw">
+  <div class="timer">
+    <div class="bar"
+      [style]="'background: radial-gradient(closest-side, #2f2f2f 79%, transparent 80% 100%), conic-gradient(white calc('+width+' * 1%), #696969 0)'">
+      <!-- <div class="fill" id="fill" [style]="'width:'+width+'%'"></div> -->
+      <progress [value]="width" min="0" max="100"></progress>
+      <button class="play-button" (click)="listenSong()">
+        <i class="fas fa-play"></i>
+      </button>
+    </div>
+    <p class="current-time">{{currentTime.toString().padStart(2, '0')}}</p>
+    <p class="players-guesses">{{nbRightGuesses}} Personne{{nbRightGuesses > 1 ? 's' : ''}} {{nbRightGuesses > 1 ? 'ont' : 'a'}} trouvé le hit du jour</p>
+  </div>
+
+
+  <div class="song-container">
+    <div class="song-card" 
+       [ngClass]="{'active': guess != null, 'inactive': guess == null, 'correct': guess?.status == 'correct', 'p-correct': guess?.status == 'p-correct', 'incorrect': guess?.status == 'incorrect', 'last-active': i === currentStep - 1 }" 
+       *ngFor="let guess of guesses; let i = index">
+      <p class="song-name" *ngIf="guess?.track_name">{{guess.track_name}}</p>
+      <p class="artist" *ngIf="guess?.artists_name">{{guess.artists_name.join('-')}}</p>
+      <div class="checkmark" *ngIf="guess?.status" [ngClass]="guess.status"></div>
+      <img class="album-cover" *ngIf="guess?.img_album?.url" [src]="guess.img_album.url" alt="guess.track_name" />
+    </div>
+  </div>
+  <div class="guess-container">
+    <input class="guess-input" list="list-song" id="guessInput" #guessInput 
+        placeholder="Entrez le nom de la chanson" (keyup.enter)="onGuess(guessInput)"
+        [disabled]="currentStep > 4 || victory_flag"/>
+    <div class="button submit" (click)="onGuess(guessInput)">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+        <path
+          d="M16.1 260.2c-22.6 12.9-20.5 47.3 3.6 57.3L160 376V479.3c0 18.1 14.6 32.7 32.7 32.7c9.7 0 18.9-4.3 25.1-11.8l62-74.3 123.9 51.6c18.9 7.9 40.8-4.5 43.9-24.7l64-416c1.9-12.1-3.4-24.3-13.5-31.2s-23.3-7.5-34-1.4l-448 256zm52.1 25.5L409.7 90.6 190.1 336l1.2 1L68.2 285.7zM403.3 425.4L236.7 355.9 450.8 116.6 403.3 425.4z" />
+      </svg>
+    </div>
+    <div class="button skip" (click)="skipGuess()"><span>Skip</span></div>
+  </div>
+
+  <div [@fadeInOut] *ngIf="showEndScreen" class="bg"></div>
+
+  <div [@slideInOut] class="end-container" *ngIf="showEndScreen">
+    <div class="end-texts">
+      <h1 class="end-text">{{end_text}}</h1>
+      <img src="{{albumCover}}" alt="{{albumCover}}" class="album-cover" />
+      <p class="artists">Artiste(s) : {{artists}}</p>
+      <p class="track-name">Chanson : {{trackName}}</p>
+    </div>
+
+    <div class="confetti" *ngIf="victory_flag">
+      <div class="confetti-piece" *ngFor="let confetti of nbConfettis" 
+           [style.background-color]="confetti.color"
+           [style.width.px]="confetti.width"
+           [style.height.px]="confetti.height"
+           [style.left.%]="confetti.positionX"
+           [style.top.%]="confetti.positionY"
+           [style.transform]="'rotate(' + confetti.rotation + 'deg)'"
+           [style.animation-duration]="confetti.rotationSpeed + 's'"
+      >
+      </div>
+    </div>
+
+    <div class="button end-action" (click)="executeEndAction()"><span>{{endAction}}</span></div>
+    <div class="button share" (click)="share()"><span>Partager</span></div>
+  </div>
+
+
+  <datalist id="list-song">
+    <ng-container *ngIf="tracks">
+      <option *ngFor="let track of tracks" [value]="track.track_name + ' by ' + track.artists_name.join('-')"
+        [id]="track.id"></option>
+    </ng-container>
+  </datalist>
+</section>
