@@ -100,6 +100,14 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
           this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`
           this.showEndScreen = true;
         }
+        console.log(this.currentStep)
+        console.log(this.steps)
+        if (this.currentStep === this.steps.length) {
+          this.end_text = `Vous avez perdu !`;
+          this.showEndScreen = true;
+        }
+
+
         while (this.guesses.length < 5) {
           this.guesses.push(null);
         }
