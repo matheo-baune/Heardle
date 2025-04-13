@@ -372,3 +372,27 @@
     height: 30vh;
   }
 }
+
+.overlay {
+  background-color: rgb(37 37 37 / 65%);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 19; /* Assurez-vous que l'overlay est derrière le contenu de end-container */
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #fff !important;
+  font-size: 15px;
+  height: auto;
+  z-index: 30;
+  width: 25px;
+  fill: #fff;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}

@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Track } from "../../core/models/track.model";
 import { animate, style, transition, trigger } from "@angular/animations";
 import { environment } from "../../../environments/environement";
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-audio-player',
@@ -44,7 +45,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   currentTime!: number;
   width: number = 0;
   isInitialized: boolean = false;
-  
+
   guesses: any = [0, 1, 2, 3, 4];
   embedUrl: string = "";
   artists: string = "";
@@ -56,7 +57,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   showEndScreen: boolean = false;
 
   nbRightGuesses: number = 0;
-  
+  urlIframeSanitize: SafeResourceUrl = '';
+
+  constructor(private sanitizer: DomSanitizer) {}
+
   ngOnInit(): void {
     this.currentTime = 0
     this.audio = new Audio();
@@ -65,7 +69,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       if (xhr.status === 200) {
         this.tracks = JSON.parse(xhr.response)
       }
-      while (!this.song?.embed_url) { }
       this.embedUrl = this.song.embed_url
       this.artists = this.song.artists_name.join('-')
       this.trackName = this.song.track_name
@@ -85,11 +88,18 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         const audioUrl = this.extractAudioPreviewUrl(htmlContent);
         this.audio.src = audioUrl ?? "";
         this.isInitialized = true;
+        const urlIframe = `https://open.spotify.com/embed/track/${this.song.id}/?utm_source=generator&theme=0`
+        this.urlIframeSanitize = this.sanitizer.bypassSecurityTrustResourceUrl(urlIframe);
+
         this.guesses = JSON.parse(localStorage.getItem(this.localKey) ?? "[]");
         this.guesses.forEach((elt:any, index:number) => {
           if (elt?.status === 'correct') this.victory_flag = true
           if (elt !== null) this.currentStep = index + 1
         });
+        if(this.victory_flag){
+          this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`
+          this.showEndScreen = true;
+        }
         while (this.guesses.length < 5) {
           this.guesses.push(null);
         }
@@ -120,7 +130,6 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.audio.volume = 0.05;
     this.audio.play();
     setTimeout(() => {
       this.audio.pause();
@@ -200,7 +209,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         xhr2.send()
       } else {
         gResult = 'p-correct'
-      }     
+      }
 
       this.guesses[this.currentStep - 1] = {
         track_name: info_track.track_name,
@@ -232,7 +241,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     // Regex pour trouver la balise meta contenant l'URL de l'audio
     const regex = /<meta property="og:audio" content="([^"]+)"\/>/;
     const match = htmlContent.match(regex);
-  
+
     return match ? match[1] : null;
   }
 
@@ -288,6 +297,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     });
   }
 
+  closeEndScreen() {
+    this.showEndScreen = false;
+    this.victory_flag = false;
+  }
 
   ngOnDestroy(): void {
     if (this.audio) {

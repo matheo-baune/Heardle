@@ -1,7 +1,7 @@
 <!--<div [@fadeInOut] class="flex flex-col justify-evenly" *ngIf="isInitialized" style="height: 85vh;width: 90vw">-->
 <section [@fadeInOut] class="flex flex-col justify-evenly h-full" *ngIf="isInitialized" style="width: 90vw">
   <div class="timer">
-    <div class="bar"
+    <div class="bar" *ngIf="end_text.length === 0"
       [style]="'background: radial-gradient(closest-side, #2f2f2f 79%, transparent 80% 100%), conic-gradient(white calc('+width+' * 1%), #696969 0)'">
       <!-- <div class="fill" id="fill" [style]="'width:'+width+'%'"></div> -->
       <progress [value]="width" min="0" max="100"></progress>
@@ -9,14 +9,14 @@
         <i class="fas fa-play"></i>
       </button>
     </div>
-    <p class="current-time">{{currentTime.toString().padStart(2, '0')}}</p>
+    <p *ngIf="end_text.length === 0" class="current-time">{{currentTime.toString().padStart(2, '0')}}</p>
     <p class="players-guesses">{{nbRightGuesses}} Personne{{nbRightGuesses > 1 ? 's' : ''}} {{nbRightGuesses > 1 ? 'ont' : 'a'}} trouvé le hit du jour</p>
   </div>
 
 
   <div class="song-container">
-    <div class="song-card" 
-       [ngClass]="{'active': guess != null, 'inactive': guess == null, 'correct': guess?.status == 'correct', 'p-correct': guess?.status == 'p-correct', 'incorrect': guess?.status == 'incorrect', 'last-active': i === currentStep - 1 }" 
+    <div class="song-card"
+       [ngClass]="{'active': guess != null, 'inactive': guess == null, 'correct': guess?.status == 'correct', 'p-correct': guess?.status == 'p-correct', 'incorrect': guess?.status == 'incorrect', 'last-active': i === currentStep - 1 }"
        *ngFor="let guess of guesses; let i = index">
       <p class="song-name" *ngIf="guess?.track_name">{{guess.track_name}}</p>
       <p class="artist" *ngIf="guess?.artists_name">{{guess.artists_name.join('-')}}</p>
@@ -24,8 +24,10 @@
       <img class="album-cover" *ngIf="guess?.img_album?.url" [src]="guess.img_album.url" alt="guess.track_name" />
     </div>
   </div>
-  <div class="guess-container">
-    <input class="guess-input" list="list-song" id="guessInput" #guessInput 
+
+
+  <div class="guess-container" *ngIf="end_text.length === 0">
+    <input class="guess-input" list="list-song" id="guessInput" #guessInput
         placeholder="Entrez le nom de la chanson" (keyup.enter)="onGuess(guessInput)"
         [disabled]="currentStep > 4 || victory_flag"/>
     <div class="button submit" (click)="onGuess(guessInput)">
@@ -38,17 +40,32 @@
   </div>
 
   <div [@fadeInOut] *ngIf="showEndScreen" class="bg"></div>
-
+  <div *ngIf="showEndScreen" class="overlay"></div>
   <div [@slideInOut] class="end-container" *ngIf="showEndScreen">
     <div class="end-texts">
+      <div class="w-full">
+        <button class="close-button" (click)="closeEndScreen()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512">
+            <path d="M242.7 256L342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L242.7 256z"/>
+          </svg>
+        </button>
+        <iframe style="border-radius:12px"
+                         *ngIf="urlIframeSanitize"
+                         [src]="urlIframeSanitize"
+                         width="100%"
+                         height="152"
+                         allow="autoplay; clipboard-write; fullscreen; picture-in-picture"
+                         loading="lazy">
+      </iframe>
+      </div>
       <h1 class="end-text">{{end_text}}</h1>
       <img src="{{albumCover}}" alt="{{albumCover}}" class="album-cover" />
       <p class="artists">Artiste(s) : {{artists}}</p>
       <p class="track-name">Chanson : {{trackName}}</p>
     </div>
 
-    <div class="confetti" *ngIf="victory_flag">
-      <div class="confetti-piece" *ngFor="let confetti of nbConfettis" 
+    <div class="confetti" *ngIf="showEndScreen">
+      <div class="confetti-piece" *ngFor="let confetti of nbConfettis"
            [style.background-color]="confetti.color"
            [style.width.px]="confetti.width"
            [style.height.px]="confetti.height"
