@@ -380,7 +380,10 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 19; /* Assurez-vous que l'overlay est derrière le contenu de end-container */
+  z-index: 19;
+
+  backdrop-filter: blur(10px);
+  transition: all 2s ease;
 }
 
 .close-button {
