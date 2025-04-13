@@ -188,11 +188,9 @@
 .guess-input {
   height: 3vh;
   width: 70vw;
-  border-radius: 20px;
   background-color: white;
   padding-left: 1vw;
-  border-top-left-radius: 45px;
-  border-bottom-left-radius: 45px;
+  border-radius: 45px 20px 20px 45px;
 }
 
 .guess-container>.button {
@@ -356,9 +354,7 @@
   }
 
   .guess-container>.button:first-of-type {
-    border-radius: 20px;
-    border-top-left-radius: 45px;
-    border-bottom-left-radius: 45px;
+    border-radius: 45px 20px 20px 45px;
   }
 
   .end-container {
