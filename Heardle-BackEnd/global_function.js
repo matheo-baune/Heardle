@@ -19,6 +19,20 @@ function getDailyIndex(){
     return index_daily;
 }
 
+function getTracksByPlaylistId(playlist_id, tracks){
+    if (playlist_indexes[playlist_id] === undefined) {
+        return [];
+    }
+    const indexes = playlist_indexes[playlist_id];
+    const returnValue = [];
+    tracks.forEach((track) => {
+        if (indexes.includes(track.id)) {
+            returnValue.push(track);
+        }
+    });
+    return returnValue;
+}
+
 function getThemeDaily(playlist_id){
     const index = indexes_themes[playlist_id];
     return playlist_indexes[playlist_id][index];
@@ -208,5 +222,6 @@ module.exports = {
     getDailyIndex,
     getTrackByID,
     getRandomPlaylistTrack,
-    getThemeDaily
+    getThemeDaily,
+    getTracksByPlaylistId
 };

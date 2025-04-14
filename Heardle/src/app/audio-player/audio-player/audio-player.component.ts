@@ -110,7 +110,11 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
           console.error('There was a problem with the fetch operation:', error);
         });
     };
-    xhr.open('GET', `${environment.apiUrl}/all`);
+    if (this.playlistId) {
+      xhr.open('GET', `${environment.apiUrl}/playlists/${this.playlistId}/tracks`);
+    } else {
+      xhr.open('GET', `${environment.apiUrl}/all`);
+    }
     xhr.send();
 
     let xhr2 = new XMLHttpRequest();

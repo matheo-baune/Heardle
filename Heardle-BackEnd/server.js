@@ -43,6 +43,16 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.get('/playlists/:id/tracks', async (req, res) => {
+    const playlist_id = req.params.id
+    const tracks = Global.getTracksByPlaylistId(playlist_id, all_tracks);
+    if (tracks.length > 0) {
+        res.send(tracks)
+    } else {
+        res.status(500).send('No Tracks found, try again later')
+    }
+});
+
 
 app.get('/all', async (req, res) => {
     res.setHeader('content-type', 'application/json');
