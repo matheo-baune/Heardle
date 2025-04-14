@@ -39,6 +39,15 @@
     <div class="button skip" (click)="skipGuess()"><span>Skip</span></div>
   </div>
 
+  <div *ngIf="mode == 'streak'" class="streak-container">
+    <p class="streak-display">{{currentStreak}}<span class="fire">🔥</span></p>
+    <div *ngFor="let streakGuess of streakGuesses; let i = index" 
+       class="streak-guess" 
+       [ngClass]="{'min-guess': streakGuesses.length - i > 6}">
+      <img [src]="streakGuess.img_album.url" alt="streakGuess.track_name">
+    </div>
+  </div>
+
   <div [@fadeInOut] *ngIf="showEndScreen" class="bg"></div>
   <div *ngIf="showEndScreen" class="overlay"></div>
   <div [@slideInOut] class="end-container" *ngIf="showEndScreen">

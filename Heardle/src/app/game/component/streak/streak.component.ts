@@ -33,7 +33,7 @@ export class StreakComponent implements OnInit{
     this.playlist = playlist.id
     console.log(playlist.id)
     console.log(playlist.name)
-    fetch(`${environment.apiUrl}/daily/${playlist.id}`)
+    fetch(`${environment.apiUrl}/playlists/${playlist.id}/randomTrack`)
     .then(response => response.json())
     .then(data => {
       this.song = data

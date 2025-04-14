@@ -38,6 +38,13 @@
   justify-content: flex-end;
 }
 
+.streak-display {
+  color: #d9d9d9;
+  font-size: 2em;
+  display: flex;
+  align-items: center;
+}
+
 .bar button {
   position: absolute;
   top: 50%;
@@ -400,4 +407,56 @@
 .close-button:hover {
   cursor: pointer;
   transform: scale(1.2);
+}
+
+.streak-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  top: 50%;
+  right: 5vw;
+  transform: translateY(-50%);
+  gap: 2vh;
+  width: 10vh;
+  align-items: center;
+}
+
+.streak-container div {
+  height: 8vh;
+  width: 8vh;
+  border: 1px solid #60ff60;
+  border-radius: 50%;
+}
+
+.streak-container div img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: all 0.2s ease;
+}
+
+.streak-container div:hover {
+  transform: scale(1.2);
+}
+
+.streak-guess.min-guess {
+  display: none;
+}
+
+.fire.active {
+  animation: fireAnimation .7s linear forwards;
+}
+
+@keyframes fireAnimation {
+  0% {
+    transform: translateY(0) rotateY(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotateY(180deg);
+  }
+  100% {
+    transform: translateY(0) rotateY(360deg);
+  }
 }

@@ -38,6 +38,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   @Input() steps!: number[];
   currentStep: number = 0;
 
+  @Input() playlistId!: string;
   @Input() mode!: string;
   @Input() endAction!: string;
 
@@ -56,6 +57,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   albumCover: string = "";
   nbConfettis: any = [];
   showEndScreen: boolean = false;
+  currentStreak: number = 0;
+  streakGuesses: any = [];
+  streakFireEmoji: HTMLElement | null = null;
 
   nbRightGuesses: number = 0;
   urlIframeSanitize: SafeResourceUrl = '';
@@ -63,21 +67,29 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   constructor(private sanitizer: DomSanitizer) {}
 
   ngOnInit(): void {
-    this.currentTime = 0
+    this.currentTime = 0;
     this.audio = new Audio();
-    let xhr = new XMLHttpRequest()
+    this.initSongData();
+    this.initConfetti();
+  }
+
+  async initSongData(): Promise<void> {
+    let xhr = new XMLHttpRequest();
     xhr.onload = async () => {
       if (xhr.status === 200) {
-        this.tracks = JSON.parse(xhr.response)
+        this.tracks = JSON.parse(xhr.response);
       }
-      this.embedUrl = this.song.embed_url
-      this.artists = this.song.artists_name.join('-')
-      this.trackName = this.song.track_name
-      if (localStorage.getItem(this.localKey+"guess") === null || localStorage.getItem(this.localKey+"guess") != this.song.track_name) {
-        localStorage.setItem(this.localKey+"guess", this.song.track_name)
-        localStorage.removeItem(this.localKey)
+      this.embedUrl = this.song.embed_url;
+      this.artists = this.song.artists_name.join('-');
+      this.trackName = this.song.track_name;
+
+      if (localStorage.getItem(this.localKey + "guess") === null || localStorage.getItem(this.localKey + "guess") != this.song.track_name) {
+        localStorage.setItem(this.localKey + "guess", this.song.track_name);
+        localStorage.removeItem(this.localKey);
       }
-      this.albumCover = this.song.img_album.url
+
+      this.albumCover = this.song.img_album.url;
+
       await fetch(`https://guesshit-api.k-mathe.fr/proxy?url=${encodeURIComponent(this.embedUrl)}`, {
         method: 'GET',
         headers: {
@@ -85,46 +97,52 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
           'Accept': 'application/json'
         }
       }).then((response) => response.text())
-      .then((htmlContent) => {
-        const audioUrl = this.extractAudioPreviewUrl(htmlContent);
-        this.audio.src = audioUrl ?? "";
-        this.isInitialized = true;
-        const urlIframe = `https://open.spotify.com/embed/track/${this.song.id}/?utm_source=generator&theme=0`
-        this.urlIframeSanitize = this.sanitizer.bypassSecurityTrustResourceUrl(urlIframe);
+        .then((htmlContent) => {
+          const audioUrl = this.extractAudioPreviewUrl(htmlContent);
+          this.audio.src = audioUrl ?? "";
+          this.isInitialized = true;
 
-        this.guesses = JSON.parse(localStorage.getItem(this.localKey) ?? "[]");
-        this.guesses.forEach((elt:any, index:number) => {
-          if (elt?.status === 'correct') this.victory_flag = true
-          if (elt !== null) this.currentStep = index + 1
+          const urlIframe = `https://open.spotify.com/embed/track/${this.song.id}/?utm_source=generator&theme=0`;
+          this.urlIframeSanitize = this.sanitizer.bypassSecurityTrustResourceUrl(urlIframe);
+
+          this.initializeGuesses();
+        }).catch((error) => {
+          console.error('There was a problem with the fetch operation:', error);
         });
-        if(this.victory_flag){
-          this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`
-          this.showEndScreen = true;
-        }
-        if (this.currentStep === this.steps.length) {
-          this.end_text = `Vous avez perdu !`;
-          this.showEndScreen = true;
-        }
-
-
-        while (this.guesses.length < 5) {
-          this.guesses.push(null);
-        }
-      }).catch((error) => {
-        console.error('There was a problem with the fetch operation:', error);
-      });
-    }
-    xhr.open('GET', `${environment.apiUrl}/all`)
+    };
+    xhr.open('GET', `${environment.apiUrl}/all`);
     xhr.send();
-    let xhr2 = new XMLHttpRequest()
+
+    let xhr2 = new XMLHttpRequest();
     xhr2.onload = () => {
       if (xhr2.status === 200) {
-        this.nbRightGuesses = JSON.parse(xhr2.response).nbRightGuesses
+        this.nbRightGuesses = JSON.parse(xhr2.response).nbRightGuesses;
       }
+    };
+    xhr2.open('GET', `${environment.apiUrl}/rightGuesses`);
+    xhr2.send();
+  }
+
+  initializeGuesses(): void {
+    this.guesses = JSON.parse(localStorage.getItem(this.localKey) ?? "[]");
+    this.guesses.forEach((elt: any, index: number) => {
+      if (elt?.status === 'correct') this.victory_flag = true;
+      if (elt !== null) this.currentStep = index + 1;
+    });
+
+    if (this.victory_flag) {
+      this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`;
+      this.showEndScreen = true;
     }
-    xhr2.open('GET', `${environment.apiUrl}/rightGuesses`)
-    xhr2.send()
-    this.initConfetti()
+
+    if (this.currentStep === this.steps.length) {
+      this.end_text = `Vous avez perdu !`;
+      this.showEndScreen = true;
+    }
+
+    while (this.guesses.length < 5) {
+      this.guesses.push(null);
+    }
   }
 
   listenSong(): void {
@@ -150,7 +168,11 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     }
     this.currentStep++;
     if (this.currentStep >= this.steps.length) {
-      this.end_text = `Vous avez perdu !`
+      if (this.mode == 'sreak') {
+        this.end_text = `Vous avez perdu ! Vous avez trouvé ${this.currentStreak} hits !`
+      } else {
+        this.end_text = `Vous avez perdu !`
+      }
       this.showEndScreen = true
     }
 
@@ -183,7 +205,11 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       inputElement.value = ""
       this.currentStep++;
       if (this.currentStep >= this.steps.length) {
-        this.end_text = `Vous avez perdu !`
+        if (this.mode == 'sreak') {
+          this.end_text = `Vous avez perdu ! Vous avez trouvé ${this.currentStreak} hits !`
+        } else {
+          this.end_text = `Vous avez perdu !`
+        }
         this.showEndScreen = true
       }
       this.displayGuess(id_track)
@@ -202,19 +228,51 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       if (this.isWrong(info_track.track_name, info_track.artists_name)) {
         gResult = 'incorrect'
       } else if (this.isCorrect(info_track.track_name, info_track.artists_name)) {
-        gResult = 'correct'
-        this.victory_flag = true
-        this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`
-        this.showEndScreen = true
-        if (this.mode == 'daily') {
+        if (this.mode == 'streak') {
+          gResult = 'correct'
+          if (this.streakFireEmoji == null) {
+            this.streakFireEmoji = document.querySelector('.fire');
+            this.streakFireEmoji?.addEventListener('animationend', () => {
+              this.streakFireEmoji?.classList.remove('active');
+            });
+          }
+          this.streakFireEmoji?.classList.add('active');
+          this.streakGuesses.push({
+            track_name: info_track.track_name,
+            artists_name: info_track.artists_name,
+            img_album: info_track.img_album,
+            status: gResult,
+          })
+          this.currentStreak++
+          this.currentStep = 0;
+          this.guesses = [null, null, null, null, null]
+          localStorage.setItem(this.localKey + "streak", JSON.stringify(this.currentStreak))
+          localStorage.setItem(this.localKey, '{}');
           let xhr2 = new XMLHttpRequest()
           xhr2.onload = () => {
             if (xhr2.status === 200) {
-              this.nbRightGuesses = JSON.parse(xhr2.response).nbRightGuesses
+              this.song = JSON.parse(xhr2.response)
+              this.initSongData();
+              this.initializeGuesses();
             }
           }
-          xhr2.open('GET', `${environment.apiUrl}/addRightGuess`)
+          xhr2.open('GET', `${environment.apiUrl}/playlists/${this.playlistId}/randomTrack`)
           xhr2.send()
+        } else {
+          gResult = 'correct'
+          this.victory_flag = true
+          this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`
+          this.showEndScreen = true
+          if (this.mode == 'daily') {
+            let xhr2 = new XMLHttpRequest()
+            xhr2.onload = () => {
+              if (xhr2.status === 200) {
+                this.nbRightGuesses = JSON.parse(xhr2.response).nbRightGuesses
+              }
+            }
+            xhr2.open('GET', `${environment.apiUrl}/addRightGuess`)
+            xhr2.send()
+          }
         }
       } else {
         gResult = 'p-correct'
