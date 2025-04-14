@@ -10,7 +10,7 @@
       </button>
     </div>
     <p *ngIf="end_text.length === 0" class="current-time">{{currentTime.toString().padStart(2, '0')}}</p>
-    <p class="players-guesses">{{nbRightGuesses}} Personne{{nbRightGuesses > 1 ? 's' : ''}} {{nbRightGuesses > 1 ? 'ont' : 'a'}} trouvé le hit du jour</p>
+    <p *ngIf="mode === 'daily'" class="players-guesses">{{nbRightGuesses}} Personne{{nbRightGuesses > 1 ? 's' : ''}} {{nbRightGuesses > 1 ? 'ont' : 'a'}} trouvé le hit du jour</p>
   </div>
 
 

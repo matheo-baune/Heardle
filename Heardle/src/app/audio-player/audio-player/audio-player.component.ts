@@ -38,6 +38,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   @Input() steps!: number[];
   currentStep: number = 0;
 
+  @Input() mode!: string;
   @Input() endAction!: string;
 
   @Input() localKey!: string;
@@ -205,14 +206,16 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         this.victory_flag = true
         this.end_text = `Bravo ! Vous avez trouvé la musique en ${this.currentStep} essai${this.currentStep > 1 ? 's' : ''} !`
         this.showEndScreen = true
-        let xhr2 = new XMLHttpRequest()
-        xhr2.onload = () => {
-          if (xhr2.status === 200) {
-            this.nbRightGuesses = JSON.parse(xhr2.response).nbRightGuesses
+        if (this.mode == 'daily') {
+          let xhr2 = new XMLHttpRequest()
+          xhr2.onload = () => {
+            if (xhr2.status === 200) {
+              this.nbRightGuesses = JSON.parse(xhr2.response).nbRightGuesses
+            }
           }
+          xhr2.open('GET', `${environment.apiUrl}/addRightGuess`)
+          xhr2.send()
         }
-        xhr2.open('GET', `${environment.apiUrl}/addRightGuess`)
-        xhr2.send()
       } else {
         gResult = 'p-correct'
       }

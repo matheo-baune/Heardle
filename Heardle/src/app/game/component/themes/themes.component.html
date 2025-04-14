@@ -8,7 +8,7 @@
   </section>
   <section *ngIf="playerInitialized" class="w-max h-max contents">
     <div [@fadeInOut] class="h-full w-full flex justify-center items-center flex-col">
-      <app-audio-player [song]="song" [steps]="steps" [localKey]="playlist" [endAction]="'Rejouer'"></app-audio-player>
+      <app-audio-player [song]="song" [steps]="steps" [localKey]="playlist" [mode]="'theme'" [endAction]="'Rejouer'"></app-audio-player>
     </div>
   </section>
 </main>
