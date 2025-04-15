@@ -1,5 +1,14 @@
 <!--<div [@fadeInOut] class="flex flex-col justify-evenly" *ngIf="isInitialized" style="height: 85vh;width: 90vw">-->
 <section [@fadeInOut] class="flex flex-col justify-evenly h-full" *ngIf="isInitialized" style="width: 90vw">
+  <div *ngIf="mode == 'streak'" class="streak-container">
+    <p class="streak-display">{{currentStreak}}<span class="fire">🔥</span></p>
+    <div *ngFor="let streakGuess of streakGuesses; let i = index" 
+       class="streak-guess" 
+       [ngClass]="{'min-guess': streakGuesses.length - i > 5}">
+      <img [src]="streakGuess.img_album.url" alt="streakGuess.track_name">
+    </div>
+  </div>
+
   <div class="timer">
     <div class="bar" *ngIf="end_text.length === 0"
       [style]="'background: radial-gradient(closest-side, #2f2f2f 79%, transparent 80% 100%), conic-gradient(white calc('+width+' * 1%), #696969 0)'">
@@ -16,7 +25,7 @@
 
   <div class="song-container">
     <div class="song-card"
-       [ngClass]="{'active': guess != null, 'inactive': guess == null, 'correct': guess?.status == 'correct', 'p-correct': guess?.status == 'p-correct', 'incorrect': guess?.status == 'incorrect', 'last-active': i === currentStep - 1 }"
+       [ngClass]="{'active': guess != null, 'inactive': guess == null, 'correct': guess?.status == 'correct', 'p-correct': guess?.status == 'p-correct', 'incorrect': guess?.status == 'incorrect', 'last-active': i === currentStep - 1 || (currentStep === 0 && i === 0)}"
        *ngFor="let guess of guesses; let i = index">
       <p class="song-name" *ngIf="guess?.track_name">{{guess.track_name}}</p>
       <p class="artist" *ngIf="guess?.artists_name">{{guess.artists_name.join('-')}}</p>
@@ -46,15 +55,6 @@
       </svg>
     </div>
     <div class="button skip" (click)="skipGuess()"><span>Skip</span></div>
-  </div>
-
-  <div *ngIf="mode == 'streak'" class="streak-container">
-    <p class="streak-display">{{currentStreak}}<span class="fire">🔥</span></p>
-    <div *ngFor="let streakGuess of streakGuesses; let i = index" 
-       class="streak-guess" 
-       [ngClass]="{'min-guess': streakGuesses.length - i > 6}">
-      <img [src]="streakGuess.img_album.url" alt="streakGuess.track_name">
-    </div>
   </div>
 
   <div [@fadeInOut] *ngIf="showEndScreen" class="bg"></div>

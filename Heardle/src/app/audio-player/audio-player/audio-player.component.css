@@ -370,6 +370,10 @@
   transform: scale(1.2);
 }
 
+.streak-container p {
+  margin: 0;
+}
+
 .streak-guess.min-guess {
   display: none;
 }
@@ -505,5 +509,22 @@
 
   .end-texts>img {
     height: 30vh;
+  }
+
+  .streak-container {
+    position: relative;
+    flex-direction: row;
+    align-items: center;
+    height: 10vh;
+    width: 100%;
+    top: 0;
+    right: 0;
+    transform: translateY(0);
+    gap: 1vh;
+  } 
+
+  .streak-container div {
+    height: 5vh;
+    width: 5vh;
   }
 }
