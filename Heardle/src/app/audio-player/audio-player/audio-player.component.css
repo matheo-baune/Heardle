@@ -305,77 +305,6 @@
   animation: fall linear forwards
 }
 
-@keyframes fall {
-  0% {
-    transform: translateY(0) rotate(0deg);
-    opacity: 1;
-  }
-  90% {
-    transform: translateY(4500%) rotate(972deg);
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(5000%) rotate(1080deg);
-    opacity: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .guess-input {
-    width: 80vw;
-    height: 5vh;
-    border-top-right-radius: 45px;
-    border-bottom-right-radius: 45px;
-  }
-
-  .song-card{
-    width: 100%;
-    display: none;
-  }
-
-  .song-card.last-active{
-    display: flex;
-  }
-
-  .song-card>p {
-    width: 80vw;
-  }
-
-  .guess-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .guess-container * {
-    font-size: 1.2rem;
-  }
-
-  .guess-container>.button {
-    width: 30vw;
-    height: 5vh;
-  }
-
-  .guess-container>.button>svg {
-    height: 2.4vh;
-  }
-
-  .guess-container>.button:first-of-type {
-    border-radius: 45px 20px 20px 45px;
-  }
-
-  .end-container {
-    position: fixed;
-    width: 90vw;
-    height: 90vh;
-    padding: 5vh;
-  }
-
-  .end-texts>img {
-    height: 30vh;
-  }
-}
-
 .overlay {
   background-color: rgb(37 37 37 / 65%);
   width: 100vw;
@@ -449,6 +378,37 @@
   animation: fireAnimation .7s linear forwards;
 }
 
+
+.guess-input-container {
+  position: relative;
+}
+
+.list-song {
+  position: absolute;
+  bottom: 4vh;
+  right: 0;
+  z-index: 1000;
+  max-height: 20vh;
+  width: 68vw;
+  overflow-y: scroll;
+  background-color: #aaaaaa;
+}
+
+.list-song li {
+  height: 3vh;
+  width: 100%;
+  padding-left: 1vw;
+}
+
+.list-song li:nth-child(odd) {
+  background-color: #a0a0a0;
+}
+
+.list-song li:hover {
+  background-color: #dadada;
+  cursor: pointer;
+}
+
 @keyframes fireAnimation {
   0% {
     transform: translateY(0) rotateY(0deg);
@@ -458,5 +418,92 @@
   }
   100% {
     transform: translateY(0) rotateY(360deg);
+  }
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  90% {
+    transform: translateY(4500%) rotate(972deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(5000%) rotate(1080deg);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .guess-input {
+    width: 80vw;
+    height: 5vh;
+    border-top-right-radius: 45px;
+    border-bottom-right-radius: 45px;
+  }
+
+  .list-song {
+    bottom: 6vh;
+    right: 0;
+    z-index: 1000;
+    max-height: 50vh;
+    width: 78vw;
+    overflow-y: scroll;
+    background-color: #aaaaaa;
+  }
+  
+  .list-song li {
+    height: auto;
+    width: 100%;
+    padding: 2vw;
+  }
+
+  .song-card{
+    width: 100%;
+    display: none;
+  }
+
+  .song-card.last-active{
+    display: flex;
+  }
+
+  .song-card>p {
+    width: 80vw;
+  }
+
+  .guess-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .guess-container * {
+    font-size: 1.2rem;
+  }
+
+  .guess-container>.button {
+    width: 30vw;
+    height: 5vh;
+  }
+
+  .guess-container>.button>svg {
+    height: 2.4vh;
+  }
+
+  .guess-container>.button:first-of-type {
+    border-radius: 45px 20px 20px 45px;
+  }
+
+  .end-container {
+    position: fixed;
+    width: 90vw;
+    height: 90vh;
+    padding: 5vh;
+  }
+
+  .end-texts>img {
+    height: 30vh;
   }
 }

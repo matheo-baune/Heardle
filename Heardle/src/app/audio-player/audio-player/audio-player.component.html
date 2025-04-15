@@ -25,11 +25,20 @@
     </div>
   </div>
 
-
+  
   <div class="guess-container" *ngIf="end_text.length === 0">
-    <input class="guess-input" list="list-song" id="guessInput" #guessInput
-        placeholder="Entrez le nom de la chanson" (keyup.enter)="onGuess(guessInput)"
-        [disabled]="currentStep > 4 || victory_flag"/>
+    <div class="guess-input-container">
+      <ul *ngIf="availableTracks.length > 0" class="list-song">
+        <ng-container *ngFor="let track of availableTracks">
+          <li [id]="track.id" (click)="selectTrack(track.track_name + ' by ' + track.artists_name.join('-'), track.id)">
+            {{track.track_name + ' by ' + track.artists_name.join('-')}}
+          </li>
+        </ng-container>
+      </ul>
+      <input class="guess-input" list="list-song" id="guessInput" #guessInput
+          placeholder="Entrez le nom de la chanson" (input)="guessInputValue = guessInput.value; refreshResultList(guessInput.value)" (keyup.enter)="onGuess(guessInput)"
+          [disabled]="currentStep > 4 || victory_flag"/>
+    </div>
     <div class="button submit" (click)="onGuess(guessInput)">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
         <path
@@ -88,12 +97,4 @@
     <div class="button end-action" (click)="executeEndAction()"><span>{{endAction}}</span></div>
     <div class="button share" (click)="share()"><span>Partager</span></div>
   </div>
-
-
-  <datalist id="list-song">
-    <ng-container *ngIf="tracks">
-      <option *ngFor="let track of tracks" [value]="track.track_name + ' by ' + track.artists_name.join('-')"
-        [id]="track.id"></option>
-    </ng-container>
-  </datalist>
 </section>

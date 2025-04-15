@@ -32,6 +32,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   tracks!: Track[];
+  availableTracks!: Track[];
   audio!: HTMLAudioElement;
   @Input() song!: Track;
 
@@ -63,6 +64,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
   nbRightGuesses: number = 0;
   urlIframeSanitize: SafeResourceUrl = '';
+  guessInputValue: string = "";
+  selectedTrackId: string = "";
 
   constructor(private sanitizer: DomSanitizer) {}
 
@@ -166,6 +169,40 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     }, this.steps[this.currentStep] * 1000);
   }
 
+  refreshResultList(value: string) {
+    this.availableTracks = this.tracks.filter((elt: Track) => {
+      return this.guessContainsName(value, elt.track_name) || this.guessContainsArtists(value, elt.artists_name);
+    });
+  }
+
+  guessContainsName(value: string, name: string) {
+    if (name.toLowerCase().includes(value.toLowerCase())) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  guessContainsArtists(value: string, artists: string[]) {
+    let isValid = false;
+    artists.forEach((elt: string) => {
+      if (elt.toLowerCase().includes(value.toLowerCase())) {
+        isValid = true;
+      }
+    });
+    return isValid;
+  }
+
+  selectTrack(value: string, id: number) {
+    let guessInput = document.querySelector<HTMLInputElement>('.guess-input');
+    if (guessInput) {
+      guessInput.value = value;
+    }
+    this.guessInputValue = value;
+    this.refreshResultList(value);
+    this.selectedTrackId = id.toString();
+  }
+
   skipGuess(): void {
     if (this.victory_flag) {
       return;
@@ -196,13 +233,10 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     let isValideGuess: boolean = false
     let id_track: string = ""
 
-    document.querySelectorAll<HTMLOptionElement>('#list-song option').forEach(elt => {
-      if (elt.value === inputElement.value) {
-        isValideGuess = true
-        id_track = elt.id
-        return;
-      }
-    })
+    if (this.selectedTrackId !== "") {
+      id_track = this.selectedTrackId
+      isValideGuess = true
+    }
 
 
     if (isValideGuess) {
