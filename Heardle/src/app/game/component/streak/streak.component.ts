@@ -26,6 +26,7 @@ export class StreakComponent implements OnInit{
         this.playlists.forEach((playlist) => {
           playlist.name = playlist.name.substring(11);
         })
+        this.playlists.sort((a, b) => a.name.localeCompare(b.name));
       })
   }
 

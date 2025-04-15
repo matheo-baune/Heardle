@@ -25,7 +25,8 @@ export class ThemesComponent implements OnInit{
         this.isInitialized = true
         this.playlists.forEach((playlist) => {
           playlist.name = playlist.name.substring(11);
-        })
+        });
+        this.playlists.sort((a, b) => a.name.localeCompare(b.name));
       })
   }
 
