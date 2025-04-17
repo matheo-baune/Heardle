@@ -12,13 +12,17 @@
   <div class="timer">
     <div class="bar" *ngIf="end_text.length === 0"
       [style]="'background: radial-gradient(closest-side, #2f2f2f 79%, transparent 80% 100%), conic-gradient(white calc('+width+' * 1%), #696969 0)'">
-      <!-- <div class="fill" id="fill" [style]="'width:'+width+'%'"></div> -->
       <progress [value]="width" min="0" max="100"></progress>
       <button class="play-button" (click)="listenSong()">
         <i class="fas fa-play"></i>
       </button>
     </div>
-    <p *ngIf="end_text.length === 0" class="current-time">{{currentTime.toString().padStart(2, '0')}}</p>
+    <div class="volume-container">
+      <input type="range" id="volumeInput" #volumeInput min="0" max="80" value="10" (input)="adjustVolume(volumeInput.value)" class="volume-slider">
+      <i *ngIf="volume >= 55" class="fa-solid fa-volume-high"></i>
+      <i *ngIf="volume < 55 && volume != 0" class="fa-solid fa-volume-low"></i>
+      <i *ngIf="volume == 0" class="fa-solid fa-volume-xmark"></i>
+    </div>
     <p *ngIf="mode === 'daily'" class="players-guesses">{{nbRightGuesses}} Personne{{nbRightGuesses > 1 ? 's' : ''}} {{nbRightGuesses > 1 ? 'ont' : 'a'}} trouvé le hit du jour</p>
   </div>
 
@@ -37,7 +41,7 @@
   
   <div class="guess-container" *ngIf="end_text.length === 0">
     <div class="guess-input-container">
-      <ul *ngIf="availableTracks.length > 0" class="list-song">
+      <ul *ngIf="availableTracks !== undefined && availableTracks.length > 0" class="list-song">
         <ng-container *ngFor="let track of availableTracks">
           <li [id]="track.id" (click)="selectTrack(track.track_name + ' by ' + track.artists_name.join('-'), track.id)">
             {{track.track_name + ' by ' + track.artists_name.join('-')}}

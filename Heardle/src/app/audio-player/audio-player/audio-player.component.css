@@ -53,6 +53,44 @@
   margin-left: 3px;
 }
 
+.volume-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volume-container i {
+  font-size: 1.5rem;
+  width: 3vw;
+  color: #d9d9d9;
+}
+
+.volume-container input {
+  -webkit-appearance: none;
+  width: 15vw;
+  margin-right: 1vw;
+  height: 5px;
+  background: #d9d9d9;
+  border-radius: 5px;
+  outline: none;
+}
+
+.volume-container input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #696969;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.volume-container input::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #aaaaaa;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 .play-button {
   border: none;
   background: none;
@@ -437,6 +475,18 @@
   100% {
     transform: translateY(5000%) rotate(1080deg);
     opacity: 0;
+  }
+}
+
+@media (max-width: 550px) {
+  .timer>p.players-guesses {
+    display: none;
+  }
+  .timer {
+    justify-content: space-between;
+  }
+  .volume-container input {
+    width: 30vw;
   }
 }
 

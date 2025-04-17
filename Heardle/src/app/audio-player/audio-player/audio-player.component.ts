@@ -34,6 +34,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   tracks!: Track[];
   availableTracks!: Track[];
   audio!: HTMLAudioElement;
+  volume: number = 15;
   @Input() song!: Track;
 
   @Input() steps!: number[];
@@ -58,6 +59,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   albumCover: string = "";
   nbConfettis: any = [];
   showEndScreen: boolean = false;
+  streakEndScreen: boolean = false;
   currentStreak: number = 0;
   streakGuesses: any = [];
   streakFireEmoji: HTMLElement | null = null;
@@ -72,6 +74,7 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.currentTime = 0;
     this.audio = new Audio();
+    this.audio.volume = this.volume / 100;
     this.initSongData();
     this.initConfetti();
   }
@@ -169,6 +172,11 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     }, this.steps[this.currentStep] * 1000);
   }
 
+  adjustVolume(value: string): void {
+    this.volume = Number(value);
+    this.audio.volume = this.volume / 100;
+  }
+
   refreshResultList(value: string) {
     this.availableTracks = this.tracks.filter((elt: Track) => {
       return this.guessContainsName(value, elt.track_name) || this.guessContainsArtists(value, elt.artists_name);
@@ -242,13 +250,17 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
     if (isValideGuess) {
       inputElement.value = ""
       this.currentStep++;
+      console.log(this.currentStep);
+      console.log(this.steps.length);
       if (this.currentStep >= this.steps.length) {
-        if (this.mode == 'sreak') {
+        console.log('test');
+        if (this.mode == 'streak') {
           this.end_text = `Vous avez perdu ! Vous avez trouvé ${this.currentStreak} hits !`
+          this.streakEndScreen = true;
         } else {
           this.end_text = `Vous avez perdu !`
+          this.showEndScreen = true
         }
-        this.showEndScreen = true
       }
       this.displayGuess(id_track)
     } else {
@@ -265,9 +277,14 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
       let gResult = '';
       if (this.isWrong(info_track.track_name, info_track.artists_name)) {
         gResult = 'incorrect'
+        if (this.mode == 'streak' && this.streakEndScreen) {
+          this.showEndScreen = true;
+        }
       } else if (this.isCorrect(info_track.track_name, info_track.artists_name)) {
         if (this.mode == 'streak') {
           gResult = 'correct'
+          this.showEndScreen = false;
+          this.end_text = "";
           if (this.streakFireEmoji == null) {
             this.streakFireEmoji = document.querySelector('.fire');
             this.streakFireEmoji?.addEventListener('animationend', () => {
@@ -314,6 +331,9 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
         }
       } else {
         gResult = 'p-correct'
+        if (this.mode == 'streak' && this.streakEndScreen) {
+          this.showEndScreen = true;
+        }
       }
 
       this.guesses[this.currentStep - 1] = {
