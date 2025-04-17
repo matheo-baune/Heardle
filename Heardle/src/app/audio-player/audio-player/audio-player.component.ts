@@ -249,6 +249,8 @@ export class AudioPlayerComponent implements OnInit, OnDestroy {
 
     if (isValideGuess) {
       inputElement.value = ""
+      this.selectedTrackId = ""
+      this.guessInputValue = ""
       this.currentStep++;
       console.log(this.currentStep);
       console.log(this.steps.length);
